@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #import "FLTSharePlugin.h"
+#import "LinkPresentation/LPLinkMetadata.h"
 
 static NSString *const PLATFORM_CHANNEL = @"plugins.flutter.io/share";
 
@@ -87,6 +88,14 @@ static NSString *const PLATFORM_CHANNEL = @"plugins.flutter.io/share";
   UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return newImage;
+}
+
+- (LPLinkMetadata *)activityViewControllerLinkMetadata:
+    (UIActivityViewController *)activityViewController
+    API_AVAILABLE(macos(10.15), ios(13.0), watchos(6.0)) {
+  LPLinkMetadata *metadata = [[LPLinkMetadata alloc] init];
+  metadata.title = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+  return metadata;
 }
 
 @end
